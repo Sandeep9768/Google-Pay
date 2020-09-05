@@ -26,7 +26,8 @@ var styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "stretch",
     alignSelf: "stretch",
-    backgroundColor: "rgb(236 242 247)",
+    // backgroundColor: "rgb(236 242 247)",
+    // backgroundColor: "red",
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 50,
@@ -35,6 +36,7 @@ var styles = StyleSheet.create({
     padding: 5,
     marginTop: 5,
     marginBottom: 5,
+    margin:10
   },
   btnContainer: {
     flex: 1,

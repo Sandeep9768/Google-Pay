@@ -13,10 +13,13 @@ import {
   TouchableHighlight,
   Image,
 } from "react-native";
+import { AntDesign } from '@expo/vector-icons';
 import { Dimensions } from "react-native";
 import ProfileIconsView from "./component/ProfileIconsView";
 import { People, BuisnessBill, billType, promotions } from "./lib/lib";
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 const screenHeight = Math.round(Dimensions.get("window").height);
+const screenWidth = Math.round(Dimensions.get("window").width);
 var HEADER_MAX_HEIGHT = 300;
 const HEADER_MIN_HEIGHT = Platform.OS === "ios" ? 1 : 3;
 var HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
@@ -24,9 +27,11 @@ const demo = () => {
   HEADER_MAX_HEIGHT = screenHeight - 40;
   HEADER_SCROLL_DISTANCE = HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT;
 };
+import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Icon } from "native-base";
 import ButtonUi from "./component/ButtonUi";
 import DotViewLine from "./component/DotViewLine";
+import Promotions from "./component/Promotions";
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -45,17 +50,7 @@ export default class App extends Component {
     return (
       <View>
         <View style={styles.scrollViewContent}>
-          <TouchableOpacity
-            onPress={async () => {
-              const a = await demo();
-              alert(a);
-              this.setState({
-                refreshing: true,
-              });
-            }}
-          >
-            <Text>Press Here</Text>
-          </TouchableOpacity>
+         
           <View>
             <Text style={{ fontSize: 17, paddingVertical: 10 }}>People</Text>
             <ProfileIconsView data={People}></ProfileIconsView>
@@ -78,7 +73,7 @@ export default class App extends Component {
           >
             <Text style={{ fontSize: 20 }}>Buisnesses & Bills</Text>
 
-            <ButtonUi width={90} height={30}>
+            <ButtonUi >
               <View
                 style={{
                   flex: 1,
@@ -89,7 +84,8 @@ export default class App extends Component {
                   borderRadius: 10,
                 }}
               >
-                <Icon name="beer" style={{ fontSize: 18, color: "blue" }} />
+                <MaterialCommunityIcons name="bag-personal" size={18} color="blue" />
+
                 <Text style={{ color: "blue" }}>Explore</Text>
               </View>
             </ButtonUi>
@@ -105,7 +101,7 @@ export default class App extends Component {
             >
               {BuisnessBill.map((bill, i) => {
                 return (
-                  <ButtonUi>
+                  <ButtonUi >
                     <View
                       style={{
                         flex: 1,
@@ -114,13 +110,23 @@ export default class App extends Component {
                         alignItems: "center",
                         alignSelf: "stretch",
                         borderRadius: 10,
+                        marginEnd: 10
                       }}
                     >
-                      <Icon
+                      {/* <Icon
                         name="beer"
-                        style={{ fontSize: 18, color: "blue" }}
+                        style={{ fontSize: 18, color: "gray" }}
+                      /> */}
+                      <Image
+                        style={{
+                          width: 20,
+                          height: 20,
+                          borderWidth: 4,
+                          borderColor: "black",
+                        }}
+                        source={bill.profile}
                       />
-                      <Text style={{ color: "blue" }}>{bill.name}</Text>
+                      <Text style={{ color: "gray" }}>{bill.name}</Text>
                     </View>
                   </ButtonUi>
                 );
@@ -136,10 +142,11 @@ export default class App extends Component {
 
           <View>
             <Text style={{ fontSize: 20 }}>Promotions</Text>
-            <ProfileIconsView data={promotions}></ProfileIconsView>
+            {/* <ProfileIconsView data={promotions}></ProfileIconsView> */}
+            <Promotions data={promotions}></Promotions>
           </View>
 
-          <View style={{ margin: 5 }}>
+          <View style={{ marginTop: 25 }}>
             <TouchableOpacity>
               <View
                 style={{
@@ -156,16 +163,16 @@ export default class App extends Component {
                   </Text>
                 </View>
                 <View>
-                  <Icon name="arrow-back" />
+                  <AntDesign name="arrowright" size={24} color="black" />
                 </View>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity style={{ marginTop: 20 }}>
               <View
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  justifyContent: "space-around",
+                  justifyContent: 'space-around',
                   alignItems: "center",
                 }}
               >
@@ -176,18 +183,13 @@ export default class App extends Component {
                   </Text>
                 </View>
                 <View>
-                  <Icon name="arrow-back" />
+                  <AntDesign name="arrowright" size={24} color="black" />
                 </View>
               </View>
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <Image
-            style={{ flex: 1, height: 250, marginTop: 20, resizeMode: "cover" }}
-            source={require("./assets/invite.jpg")}
-          />
-        </View>
+
       </View>
     );
   }
@@ -224,9 +226,15 @@ export default class App extends Component {
             { useNativeDriver: true }
           )}
 
-          // iOS offset for RefreshControl
+        // iOS offset for RefreshControl
         >
           {this._renderScrollViewContent()}
+          <View >
+            <Image
+              style={{ flex: 1, height: 250, width: screenWidth, padding: 20, resizeMode: "cover" }}
+              source={require("./assets/newInvite.jpg")}
+            />
+          </View>
         </Animated.ScrollView>
         <Animated.View
           pointerEvents="none"
@@ -259,8 +267,30 @@ export default class App extends Component {
                 transform: [{ translateY: imageTranslate }],
               },
             ]}
-            source={require("./assets/profile1.png")}
+            source={require("./assets/gPay.png")}
           />
+
+          <View style={{ flex: 1, marginTop: 40, margin: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <AntDesign name="scan1" size={30} color="black" />
+            <TouchableOpacity
+             onPress={async () => {
+              const a = await demo();
+              alert(a);
+              this.setState({
+                refreshing: true,
+              });
+            }}
+            >
+              <MaterialIcons style={{
+                borderRadius: 20,
+                borderWidth: 1,
+                borderColor: 'black'
+              }} name="person" size={30} color="black" />
+            </TouchableOpacity>
+
+
+
+          </View>
         </Animated.View>
       </View>
     );
@@ -270,7 +300,7 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
-    margin: 15,
+    // margin: 15,
   },
 
   scrollViewContent: {
